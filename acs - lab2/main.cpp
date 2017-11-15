@@ -58,6 +58,32 @@ int main(int argc, char *argv[])
 	printf("Empty parallel org region time = %f ms\n", (end - start)*NT * 1000 - (end2 - start2)*1000);
 
 	//////////////////////////////////////////////////////////////////////////////
+	printf("\n>>>Task 3 ==========================================================\n");
+	printf("    with nowait:\n");
+#pragma omp parallel num_threads(3)
+	{
+		int ThreadId = omp_get_thread_num();
+		printf("Начало... Thread(%d)\n", ThreadId);
+#pragma omp single
+		{
+			printf("  Один поток (nowait)... Thread(%d)\n", ThreadId);
+		}
+		printf("Конец... Thread(%d)\n", ThreadId);
+	}
+	printf("    without nowait:\n");
+#pragma omp parallel num_threads(3) 
+	{
+		int ThreadId = omp_get_thread_num();
+		printf("Начало... Thread(%d)\n", ThreadId);
+#pragma omp single
+		{
+			printf("  Один поток... Thread(%d)\n", ThreadId);
+		}
+		printf("Конец... Thread(%d)\n", ThreadId);
+	}
+
+
+	//////////////////////////////////////////////////////////////////////////////
 	printf("\n>>>Task 4 ==========================================================\n");
 	start = omp_get_wtime();
 #pragma omp parallel num_threads(3) 
